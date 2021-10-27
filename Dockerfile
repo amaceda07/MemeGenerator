@@ -4,6 +4,7 @@
 
 
 FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS base
+RUN apt-get update -y && apt-get install -y libc6-dev libgdiplus libx11-dev && apt-get clean && ln -s /usr/lib/libgdiplus.so /usr/lib/gdiplus.dll
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
@@ -24,10 +25,4 @@ WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "MemGen.dll"]
 
-# install System.Drawing native dependencies
-RUN apt-get update \
-    && apt-get install -y --allow-unauthenticated \
-        libc6-dev \
-        libgdiplus \
-        libx11-dev \
-     && rm -rf /var/lib/apt/lists/*
+

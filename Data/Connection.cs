@@ -7,7 +7,9 @@ namespace MemGen.Data
     public class Connection : DbContext
     {
 
-        public DbSet<Imagen> Imagenes { get; set; }
+        internal DbSet<Imagen> Imagenes { get; set; }
+
+        internal DbSet<Usuario> Usuarios { get; set; }
 
         public Connection(DbContextOptions<Connection> options) : base(options)
         {
@@ -23,6 +25,12 @@ namespace MemGen.Data
           new Imagen { ImagenID = 3, Nombre = "Jim_Watching", URL = "https://newfastuff.com/wp-content/uploads/2019/05/ml77Rv1.png" }
 
           );
+
+            modelBuilder.Entity<Usuario>().HasData
+                (
+                new Usuario { UsuarioID = 1, Nombre = "Alejandro", Nick = "alexMac", Estatus = 1, Password = "534b44a19bf18d20b71ecc4eb77c572f" }
+                );
+
         }
 
 
