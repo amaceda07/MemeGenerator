@@ -28,5 +28,11 @@
     <Folder Include="Resultados\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="globantAPI.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 
 </Project>

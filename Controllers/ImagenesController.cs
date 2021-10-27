@@ -79,6 +79,7 @@ namespace MemGen.Controllers
         #endregion
 
         #region DELETE
+        [HttpDelete]
         public async Task<ActionResult<Imagen>> DeleteImage(int imagenID)
         {
             if (!ExisteImagen(imagenID)) { return NotFound(); }

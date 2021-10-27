@@ -54,6 +54,7 @@ namespace MemGen.Controllers
         #endregion
 
         #region HTTPPUT
+        [HttpPut]
         public async Task<ActionResult<IActionResult>> UpdateUser(int usuarioID, Usuario usuario)
         {
             if (usuarioID != usuario.UsuarioID) { return BadRequest(); }
@@ -72,6 +73,7 @@ namespace MemGen.Controllers
         #endregion
 
         #region HTTPDELETE
+        [HttpDelete]
         public async Task<ActionResult<Usuario>> DeleteUser(int usuarioID)
         {
             if (!ExisteUsuario(usuarioID)) { return NotFound(); }

@@ -10,6 +10,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
+using Microsoft.OpenApi.Models; 
+using System.IO;
+using System.Linq;
 
 namespace MemGen
 {
@@ -26,6 +29,13 @@ namespace MemGen
         public void ConfigureServices(IServiceCollection services)
         {
             var key = Encoding.ASCII.GetBytes("ALEJANDRO.MACEDA12345678");
+
+            AddSwagger(services); // Step 2.
+            services.AddSwaggerGen(c =>
+            {
+                c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+                
+            });
 
             services.AddAuthentication(x =>
             {
@@ -75,7 +85,36 @@ namespace MemGen
             //{
             //    endpoints.MapControllers();
             //});
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "AlexAPI V1");
+            }); 
+
             app.UseMvc();
         }
+
+        private void AddSwagger(IServiceCollection services)
+        {
+            services.AddSwaggerGen(options =>
+            {
+                var groupName = "v1";
+
+                options.SwaggerDoc(groupName, new OpenApiInfo
+                {
+                    Title = $"Alex API {groupName}",
+                    Version = groupName,
+                    Description = "Globant MEME API",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Alejandro Maceda",
+                        Email = string.Empty,
+                        Url = new Uri("https://foo.com/"),
+                    },
+                });
+            });
+        }
+
     }
 }
